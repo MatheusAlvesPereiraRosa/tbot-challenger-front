@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <main class="">Algo</main>
+  <section class="">Algo</section>
 </template>
 
 <style scoped></style>
