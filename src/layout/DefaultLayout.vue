@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <Header />
 
-    <div class="flex">
+    <div class="flex w-full">
       <ChatList />
       <RouterView />
     </div>
@@ -16,10 +16,4 @@
 </script>
 
 <style scoped>
-  .flex {
-    display: flex;
-  }
-  .flex-1 {
-    flex: 1;
-  }
 </style>

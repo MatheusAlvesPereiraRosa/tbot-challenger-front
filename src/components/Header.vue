@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="bg-gray-100 flex justify-between items-center p-2">
+    <nav class="bg-orange-500 flex justify-between items-center p-4">
       <RouterLink to="/" class="text-2xl font-bold text-purple-950">
         Your App
       </RouterLink>
@@ -13,7 +13,7 @@
             5 <!-- You can use dynamic content here, like the number of unread messages -->
           </div>
         </div>
-        <RouterLink to="/cart" class="text-purple-950">
+        <RouterLink to="/cart" class="text-xl text-purple-950">
           Logout
         </RouterLink>
       </div>

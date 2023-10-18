@@ -1,6 +1,6 @@
 <template>
-  <aside class="bg-gray-200 w-1/4 min-h-screen border-r border-gray-300 p-4">
-    <div class="text-xl font-bold mb-4">Contacts</div>
+  <aside class="bg-orange-100 w-3/12 min-h-screen border-r border-gray-300 p-4">
+    <div class="text-xl font-bold mb-4 text-purple-800">Contacts</div>
     <ul>
       <li
         v-for="contact in contacts"
