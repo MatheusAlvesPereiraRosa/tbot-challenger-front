@@ -2,7 +2,7 @@
   <header>
     <nav class="bg-orange-500 flex justify-between items-center p-4">
       <RouterLink to="/" class="text-2xl font-bold text-purple-950">
-        Your App
+        <img :src="imgUrl" class="w-[10rem]" alt="">
       </RouterLink>
       <div class="flex space-x-2">
         <div class="relative" @click="toggleChat">
@@ -28,6 +28,7 @@
 <script setup>
   import { ref } from 'vue'
   import { RouterLink } from 'vue-router'
+  import imgUrl from '../assets/Tbot-challenge-logo.png'
 
   const showChat = ref(false)
 
