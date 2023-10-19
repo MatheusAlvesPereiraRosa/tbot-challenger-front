@@ -15,5 +15,4 @@
   import ChatList from '../components/ChatList.vue'
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
