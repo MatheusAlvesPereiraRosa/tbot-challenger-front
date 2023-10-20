@@ -5,7 +5,7 @@
       <li
         v-for="contact in contacts"
         :key="contact.id"
-        class="flex items-center mb-2 cursor-pointer mb-4"
+        class="flex items-center cursor-pointer mb-4"
       >
         <div class="flex-1">{{ contact.name }}</div>
       </li>
