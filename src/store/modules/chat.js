@@ -46,7 +46,7 @@ export default {
         commit('addMessage', sentMessage.message);
 
         // After sending the message, refetch the messages
-        dispatch('fetchMessages');
+        //dispatch('fetchMessages');
       } catch (error) {
         console.error(error);
       }

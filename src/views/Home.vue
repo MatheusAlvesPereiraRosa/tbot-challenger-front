@@ -14,7 +14,7 @@
         }"
       >
         <Message
-          class="flex flex-col-reverse w-fit p-3 rounded-md mb-6"
+          class="flex flex-col w-fit p-3 rounded-md mb-6"
           :class="{
             'bg-orange-200': message.isUserMessage,
             'bg-white': !message.isUserMessage,
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watchEffect } from 'vue'
+  import { ref, computed, onMounted, watchEffect, nextTick } from 'vue'
   import Message from '../components/Message.vue'
   import { useStore } from 'vuex'
   import io from 'socket.io-client'
@@ -54,20 +54,26 @@
   const reversedMessages = computed(() => messages.value.slice().reverse())
 
   const loadMessages = () => {
-      store.dispatch('fetchMessages')
-    }
+    store.dispatch('fetchMessages')
+  }
 
   // Estabelecendo conexão com websocket para receber mensagens em tempo real
   onMounted(() => {
     loadMessages()
-    // Connect to the server using Socket.IO
+    // Conectando ao websocket para receber as mensagens em tempo real
     socket.value = io('http://localhost:3000')
 
-    // Listen for incoming messages
+    // Recebendo as mensagens que chegam
     socket.value.on('message', (message) => {
-      // Commit the received message to your Vuex store
-      console.log(message)
-      store.commit('addMessage', message) // Modify the mutation according to your store structure
+      // Commitando as mensagens no Vuex store
+      store.commit('addMessage', message)
+      nextTick(() => {
+        scrollToBottomOfChat()
+      })
+    })
+
+    nextTick(() => {
+      scrollToBottomOfChat()
     })
   })
 
@@ -81,10 +87,20 @@
         timestamp: new Date().toLocaleString(),
       }
       store.dispatch('sendMessage', newMessage)
-      messageInput.value = '' // Clear the input field
+      messageInput.value = '' // Limpando o input de mensagens
+      nextTick(() => {
+        scrollToBottomOfChat()
+      })
     }
   }
 
+  // Função para fazer o scroll para o final da tela
+  const scrollToBottomOfChat = () => {
+    const chatContainer = document.getElementById('chat-container')
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight
+    }
+  }
 </script>
 
 <style scoped>
