@@ -1,6 +1,7 @@
 <template>
   <section class="w-full flex flex-col">
     <div
+      id="chat-container"
       class="flex flex-col w-full h-full overflow-y-auto max-h-[calc(100vh-8.985rem)] bg-gradient-to-r from-purple-300 to-pink-300 p-4"
     >
       <div
@@ -13,7 +14,7 @@
         }"
       >
         <Message
-          class="flex flex-col-reverse w-fit p-3 rounded-md mb-6"
+          class="flex flex-col w-fit p-3 rounded-md mb-6"
           :class="{
             'bg-orange-200': message.isUserMessage,
             'bg-white': !message.isUserMessage,
@@ -35,9 +36,12 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watchEffect } from 'vue'
+  import { ref, computed, onMounted, watchEffect, nextTick } from 'vue'
   import Message from '../components/Message.vue'
   import { useStore } from 'vuex'
+  import io from 'socket.io-client'
+
+  const socket = ref(null)
 
   const store = useStore()
 
@@ -45,7 +49,33 @@
 
   const messages = computed(() => store.getters['getMessages'])
 
+  console.log(messages)
+
   const reversedMessages = computed(() => messages.value.slice().reverse())
+
+  const loadMessages = () => {
+    store.dispatch('fetchMessages')
+  }
+
+  // Estabelecendo conexão com websocket para receber mensagens em tempo real
+  onMounted(() => {
+    loadMessages()
+    // Conectando ao websocket para receber as mensagens em tempo real
+    socket.value = io('http://localhost:3000')
+
+    // Recebendo as mensagens que chegam
+    socket.value.on('message', (message) => {
+      // Commitando as mensagens no Vuex store
+      store.commit('addMessage', message)
+      nextTick(() => {
+        scrollToBottomOfChat()
+      })
+    })
+
+    nextTick(() => {
+      scrollToBottomOfChat()
+    })
+  })
 
   const sendMessage = () => {
     const messageText = messageInput.value
@@ -57,30 +87,20 @@
         timestamp: new Date().toLocaleString(),
       }
       store.dispatch('sendMessage', newMessage)
-      messageInput.value = '' // Clear the input field
+      messageInput.value = '' // Limpando o input de mensagens
+      nextTick(() => {
+        scrollToBottomOfChat()
+      })
     }
   }
 
-  // Function to scroll to the bottom of the chat
-  /*const scrollToBottomOfChat = () => {
+  // Função para fazer o scroll para o final da tela
+  const scrollToBottomOfChat = () => {
     const chatContainer = document.getElementById('chat-container')
-    chatContainer.scrollTop = chatContainer.scrollHeight
-  }*/
-
-  // Watch for changes in the `reversedMessages` computed property
-  /*watchEffect(() => {
-    // Perform any additional logic when `reversedMessages` changes
-    // For example, scroll to the bottom of the chat
-    scrollToBottomOfChat()
-  })*/
-
-  const loadMessages = () => {
-    store.dispatch('fetchMessages')
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight
+    }
   }
-
-  onMounted(() => {
-    loadMessages() // Call the action when the component is mounted
-  })
 </script>
 
 <style scoped>

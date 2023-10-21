@@ -5,7 +5,8 @@ export default {
   mutations: {
     // Mutations to update the messages state
     addMessage(state, message) {
-      state.messages.push(message);
+      state.messages.unshift(message);
+      console.log(state)
     },
     setMessages(state, messages) {
       state.messages = messages;
@@ -42,10 +43,10 @@ export default {
 
         // Send the message and update the Vuex store
         const sentMessage = await response.json();
-        commit('addMessage', sentMessage);
+        commit('addMessage', sentMessage.message);
 
         // After sending the message, refetch the messages
-        dispatch('fetchMessages');
+        //dispatch('fetchMessages');
       } catch (error) {
         console.error(error);
       }
