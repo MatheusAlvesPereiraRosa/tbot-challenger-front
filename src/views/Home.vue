@@ -5,7 +5,7 @@
       class="flex flex-col w-full h-full overflow-y-auto max-h-[calc(100vh-8.985rem)] bg-gradient-to-r from-purple-300 to-pink-300 p-4"
     >
       <div
-        v-for="message in reversedMessages"
+        v-for="message in filteredMessages"
         :key="message.id"
         class=""
         :class="{
@@ -49,9 +49,17 @@
 
   const messages = computed(() => store.getters['getMessages'])
 
-  console.log(messages)
-
   const reversedMessages = computed(() => messages.value.slice().reverse())
+
+  const selectedChatId = computed(() => store.getters['getSelectedChatId'])
+
+  const filteredMessages = computed(() => {
+    return reversedMessages.value.filter(
+      (message) => message.chatId === selectedChatId.value,
+    )
+  })
+
+  //console.log(messages)
 
   const loadMessages = () => {
     store.dispatch('fetchMessages')
@@ -84,6 +92,7 @@
         message: messageText,
         userId: 123, // Replace with the actual user ID
         isUserMessage: true,
+        chatId: selectedChatId.value,
         timestamp: new Date().toLocaleString(),
       }
       store.dispatch('sendMessage', newMessage)

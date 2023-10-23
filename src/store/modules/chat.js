@@ -1,9 +1,10 @@
 export default {
   state: {
-    messages: [], //
+    messages: [],
+    chats: [], // Guardando ids do chats
+    selectedChatId: '', // Guardando o id do chat selecionado
   },
   mutations: {
-    // Mutations to update the messages state
     addMessage(state, message) {
       state.messages.unshift(message);
       console.log(state)
@@ -11,9 +12,14 @@ export default {
     setMessages(state, messages) {
       state.messages = messages;
     },
+    setChats(state, chats) {
+      state.chats = chats;
+    },
+    selectedChat(state, chatId) {
+      state.selectedChatId = chatId;
+    },
   },
   actions: {
-    // Actions to interact with messages
     async fetchMessages({ commit }) {
       try {
         const response = await fetch('http://localhost:5000/api/getHistory');
@@ -21,14 +27,31 @@ export default {
           throw new Error('Failed to fetch messages');
         }
         const data = await response.json();
-        commit('setMessages', data); // Set the fetched messages in the store
+
+        commit('setMessages', data); 
+
       } catch (error) {
         console.error(error);
       }
     },
-    async sendMessage({ commit, dispatch }, message) {
+    async fetchChats({ commit }) {
       try {
-        // Simulate a response from the server
+        const response = await fetch('http://localhost:5000/api/getChats');
+        if (!response.ok) {
+          throw new Error('Failed to fetch messages');
+        }
+        const data = await response.json();
+
+        //console.log(data)
+
+        commit('setChats', data); 
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async sendMessage({ commit }, message) {
+      try {
         const response = await fetch('http://localhost:5000/api/sendMessage', {
           method: 'POST',
           headers: {
@@ -51,9 +74,15 @@ export default {
         console.error(error);
       }
     },
+    selectChat({commit}, chatId) {
+      commit('selectedChat', chatId)
+    }
   },
   getters: {
     // Getters to retrieve messages
     getMessages: (state) => state.messages,
+    // Filter messages based on the selectedChatId
+    getChats: (state) => state.chats,
+    getSelectedChatId: (state) => state.selectedChatId
   },
 };
