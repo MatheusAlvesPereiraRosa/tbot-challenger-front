@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p>{{ message.text }}</p>
+    <p class="text-violet-950">{{ message.text }}</p>
 
-    <p class="text-[0.65rem] text-gray-500 ml-auto mt-1">
+    <p class="text-[0.65rem] text-violet-950 ml-auto mt-1">
       {{ message.timestamp }}
     </p>
   </div>
