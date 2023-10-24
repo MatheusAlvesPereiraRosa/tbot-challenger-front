@@ -1,9 +1,9 @@
 <template>
   <header>
     <nav class="bg-orange-500 flex justify-between items-center p-4">
-      <RouterLink to="/" class="text-2xl font-bold text-purple-950">
-        <img :src="imgUrl" class="w-[10rem]" alt="">
-      </RouterLink>
+      <div class="text-2xl font-bold text-purple-950">
+        <img :src="imgUrl" class="w-[10rem]" alt="" />
+      </div>
       <div class="flex space-x-2">
         <div class="relative" @click="toggleChat">
           <span class="cursor-pointer">
@@ -17,7 +17,7 @@
             <!-- You can use dynamic content here, like the number of unread messages -->
           </div>
         </div>
-        <RouterLink to="/cart" class="text-xl text-purple-950">
+        <RouterLink to="/auth/login" class="text-xl text-purple-950" @click="logout">
           Logout
         </RouterLink>
       </div>
@@ -26,14 +26,12 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
   import { RouterLink } from 'vue-router'
   import imgUrl from '../assets/Tbot-challenge-logo.png'
 
-  const showChat = ref(false)
-
-  const toggleChat = () => {
-    showChat.value = !showChat.value
+  const logout = () => {
+    // Clear the authentication token (cookie)
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   }
 </script>
 

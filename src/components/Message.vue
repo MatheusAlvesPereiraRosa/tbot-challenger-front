@@ -2,7 +2,9 @@
   <div>
     <p>{{ message.text }}</p>
 
-    <p class="text-[0.65rem] text-gray-500 ml-auto mt-1">{{ message.timestamp }}</p>
+    <p class="text-[0.65rem] text-gray-500 ml-auto mt-1">
+      {{ message.timestamp }}
+    </p>
   </div>
 </template>
 

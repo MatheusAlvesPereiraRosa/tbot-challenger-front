@@ -7,7 +7,7 @@
       <li
         v-for="chat in chats"
         :key="chat.chatId"
-        class="flex items-center cursor-pointer mb-4"
+        class="flex items-center font-bold text-purple-800 cursor-pointer mb-4"
         @click="selectChat(chat.chatId, $event)"
       >
         <div class="flex-1">{{ chat.chatId }}</div>
@@ -33,8 +33,8 @@
 
   const selectChat = (chatId, event) => {
     // selecionando o id do chat
-    store.dispatch('selectChat', chatId);
-  };
+    store.dispatch('selectChat', chatId)
+  }
 
   onMounted(() => {
     loadChats()
