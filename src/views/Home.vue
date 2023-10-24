@@ -23,7 +23,9 @@
         />
       </div>
       <div class="m-auto" v-if="filteredMessages.length === 0">
-        <h1 class="text-2xl font-bold text-purple-800 p-2 rounded-md">Selecione um Chat</h1>
+        <h1 class="text-2xl font-bold text-purple-800 p-2 rounded-md">
+          Selecione um Chat
+        </h1>
       </div>
     </div>
     <div class="flex-1 px-4 py-3 bg-orange-500">
