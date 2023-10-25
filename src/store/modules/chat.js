@@ -8,7 +8,6 @@ export default {
     // Adicionando novas mensagens no store
     addMessage(state, message) {
       state.messages.unshift(message)
-      console.log(state)
     },
     // Setando mensagens iniciais
     setMessages(state, messages) {
