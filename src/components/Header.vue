@@ -5,11 +5,6 @@
         <img :src="imgUrl" class="w-[10rem]" alt="" />
       </div>
       <div class="flex space-x-2">
-        <div class="relative" @click="toggleChat">
-          <span class="cursor-pointer">
-            <img class="w-20 h-auto" src="/assets/hamburger.png" alt="" />
-          </span>
-        </div>
         <RouterLink to="/auth/login" class="text-xl text-purple-950" @click="logout">
           Logout
         </RouterLink>
