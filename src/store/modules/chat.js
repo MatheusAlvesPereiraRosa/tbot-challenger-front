@@ -5,21 +5,26 @@ export default {
     selectedChatId: '', // Guardando o id do chat selecionado
   },
   mutations: {
+    // Adicionando novas mensagens no store
     addMessage(state, message) {
       state.messages.unshift(message)
       console.log(state)
     },
+    // Setando mensagens iniciais
     setMessages(state, messages) {
       state.messages = messages
     },
+    // Setando chats/conversas
     setChats(state, chats) {
       state.chats = chats
     },
+    // Setando qual chat será mostrado
     selectedChat(state, chatId) {
       state.selectedChatId = chatId
     },
   },
   actions: {
+    // Recolhendo mensagens
     async fetchMessages({ commit }) {
       try {
         const token = document.cookie.split('=')[1];
@@ -39,6 +44,7 @@ export default {
         console.error(error)
       }
     },
+    // Recolhendo chats
     async fetchChats({ commit }) {
       try {
         const token = document.cookie.split('=')[1];
@@ -54,13 +60,12 @@ export default {
         }
         const data = await response.json()
 
-        //console.log(data)
-
         commit('setChats', data)
       } catch (error) {
         console.error(error)
       }
     },
+    // Enviando mensagem
     async sendMessage({ commit }, message) {
       try {
         const token = document.cookie.split('=')[1];
@@ -78,24 +83,20 @@ export default {
           throw new Error('Failed to send message')
         }
 
-        // Send the message and update the Vuex store
+        // Enviado a mensagem e atualizando o store
         const sentMessage = await response.json()
         commit('addMessage', sentMessage.message)
-
-        // After sending the message, refetch the messages
-        //dispatch('fetchMessages');
       } catch (error) {
         console.error(error)
       }
     },
+    // Selecionando mensagem
     selectChat({ commit }, chatId) {
       commit('selectedChat', chatId)
     },
   },
   getters: {
-    // Getters to retrieve messages
     getMessages: (state) => state.messages,
-    // Filter messages based on the selectedChatId
     getChats: (state) => state.chats,
     getSelectedChatId: (state) => state.selectedChatId,
   },

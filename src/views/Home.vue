@@ -64,8 +64,6 @@
     )
   })
 
-  //console.log(messages)
-
   const loadMessages = () => {
     store.dispatch('fetchMessages')
   }
@@ -95,7 +93,7 @@
     if (messageText) {
       const newMessage = {
         message: messageText,
-        userId: 123, // Replace with the actual user ID
+        userId: 123,
         isUserMessage: true,
         chatId: selectedChatId.value,
         timestamp: new Date().toLocaleString(),

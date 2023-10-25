@@ -43,7 +43,7 @@ const router = createRouter({
       path: '/home',
       component: DefaultLayout,
       beforeEnter: (to, from, next) => {
-        // Use checkAuthentication to protect the route
+        // Checando se o usuário está autenticado
         if (checkAuthentication()) {
           next()
         } else {
@@ -52,7 +52,7 @@ const router = createRouter({
       },
       children: [
         {
-          path: '', // Make sure to have an empty path for /home
+          path: '',
           name: 'home',
           component: Home,
         },

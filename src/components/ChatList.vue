@@ -17,15 +17,12 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, watchEffect } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { useStore } from 'vuex'
-  //import io from 'socket.io-client'
 
   const store = useStore()
 
   const chats = computed(() => store.getters['getChats'])
-
-  //console.log(chats)
 
   const loadChats = () => {
     store.dispatch('fetchChats')
@@ -42,5 +39,4 @@
 </script>
 
 <style scoped>
-  /* Add Tailwind CSS classes or your custom styles here */
 </style>

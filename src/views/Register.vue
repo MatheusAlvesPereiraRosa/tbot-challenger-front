@@ -67,11 +67,11 @@
       } else {
         const data = await response.json()
         const message = data.message
-        console.error(`Register failed:${message}`)
+        console.error(`Registro falhou:${message}`)
       }
     } catch (error) {
       // Erro de requisição ou erros do servidor
-      console.error('Error during login:', error)
+      console.error('Erro ao fazer requisição:', error)
     }
   }
 </script>
