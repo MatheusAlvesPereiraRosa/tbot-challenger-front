@@ -22,7 +22,7 @@
           :message="message"
         />
       </div>
-      <div class="m-auto" v-if="filteredMessages.length === 0">
+      <div v-if="filteredMessages.length === 0" class="m-auto">
         <h1 class="text-2xl font-bold text-purple-800 p-2 rounded-md">
           Selecione um Chat
         </h1>
@@ -54,10 +54,13 @@
 
   const messages = computed(() => store.getters['getMessages'])
 
+  // Invertendo a ordem das mensagens
   const reversedMessages = computed(() => messages.value.slice().reverse())
 
+  // Chat/conversa selecionada
   const selectedChatId = computed(() => store.getters['getSelectedChatId'])
 
+  // Mensagens filtradas por chatId
   const filteredMessages = computed(() => {
     return reversedMessages.value.filter(
       (message) => message.chatId === selectedChatId.value,
