@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, watchEffect } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { useStore } from 'vuex'
   import Refresh from '../assets/refresh.png'
 
@@ -31,7 +31,7 @@
   const refresh = () => {
     store.dispatch('fetchChats')
   }
-
+  
   const loadChats = () => {
     store.dispatch('fetchChats')
   }
@@ -47,5 +47,4 @@
 </script>
 
 <style scoped>
-  /* Add Tailwind CSS classes or your custom styles here */
 </style>
