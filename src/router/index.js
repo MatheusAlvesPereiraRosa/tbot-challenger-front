@@ -47,7 +47,7 @@ const router = createRouter({
         if (checkAuthentication()) {
           next()
         } else {
-          next('/login')
+          next('/auth/login')
         }
       },
       children: [
