@@ -23,11 +23,10 @@
   import imgUrl from '../assets/Tbot-challenge-logo.png'
 
   const logout = () => {
-    // Clear the authentication token (cookie)
+    // Limpando cookie (token)
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   }
 </script>
 
 <style scoped>
-  /* Add Tailwind CSS classes or your custom styles here */
 </style>
