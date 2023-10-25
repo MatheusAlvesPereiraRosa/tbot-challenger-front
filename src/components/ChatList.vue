@@ -2,7 +2,10 @@
   <aside
     class="bg-orange-100 w-3/12 min-h-[87.2vh] border-r border-gray-300 p-4"
   >
-    <div class="text-xl font-bold mb-4 text-purple-800">Chat ID's</div>
+    <div class="flex justify-between items-center mb-4 ">
+      <div class="text-xl font-bold text-purple-800">Chat ID's</div>
+      <img :src="Refresh" class="w-[25px] h-[25px] cursor-pointer" alt="Refresh" @click="refresh">
+    </div>
     <ul>
       <li
         v-for="chat in chats"
@@ -19,11 +22,16 @@
 <script setup>
   import { computed, onMounted } from 'vue'
   import { useStore } from 'vuex'
+  import Refresh from '../assets/refresh.png'
 
   const store = useStore()
 
   const chats = computed(() => store.getters['getChats'])
 
+  const refresh = () => {
+    store.dispatch('fetchChats')
+  }
+  
   const loadChats = () => {
     store.dispatch('fetchChats')
   }

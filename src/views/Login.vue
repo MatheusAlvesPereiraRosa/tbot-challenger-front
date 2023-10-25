@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col min-w-[500px] bg-orange-500 p-[3.5rem] rounded-md">
+    <div v-if="password.value !== ''" class="text-xl text-center mb-5 font-bold text-rose-900">
+      {{ error }}
+    </div>
     <div class="mb-4 flex flex-col">
       <label for="username" class="text-xl mb-2 text-purple-950">Usuário</label>
       <input
@@ -50,11 +53,28 @@
 
   const username = ref('')
   const password = ref('')
-  const loading = ref(false)
-  const error = ref('')
+  const loading = ref(false) // Propriedade para mostrar loader
+  const error = ref('') // Tratamento de error
 
   const login = async () => {
     loading.value = true
+
+    error.value = ''
+
+    if (!username.value || username.value === '' ) {
+      loading.value = false
+
+      error.value = "Nome de usuário não informado"
+      return
+    }
+
+    if (!password.value || password.value === '') {
+      loading.value = false
+
+      error.value = "Senha não informada"
+      return
+    }
+
     try {
       const response = await fetch('http://localhost:5000/auth/login', {
         method: 'POST',
@@ -81,12 +101,15 @@
       } else {
         // Lidando com erro de login
         loading.value = false
-        console.error('Error during saving the user')
+        const data = await response.json()
+        error.value = data.message
+        //console.error('Usuário inexistente')
       }
     } catch (error) {
       // Erro de requisição ou erros do servidor
       loading.value = false
-      console.error('Error during login:', error)
+      error.value = `Erro ao realizar requisição: ${error}`
+      //console.error('Erro ao realizar requisição:', error)
     }
   }
 </script>
