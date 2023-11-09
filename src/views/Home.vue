@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watchEffect, nextTick } from 'vue'
+  import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
   import Message from '../components/Message.vue'
   import { useStore } from 'vuex'
   import io from 'socket.io-client'
@@ -89,6 +89,11 @@
     nextTick(() => {
       scrollToBottomOfChat()
     })
+  })
+
+  onUnmounted(() => {
+    socket.value.disconnect()
+    console.log("Desconectei")
   })
 
   const sendMessage = () => {
